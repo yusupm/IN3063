@@ -1,24 +1,12 @@
 import numpy as np
 
-# ANSI escape code for coloured text
-BLACK = "\33[30m"
-RED = "\33[31m"
-GREEN = "\33[32m"
-YELLOW = "\33[33m"
-BLUE = "\33[34m"
-MAGENTA = "\33[35m"
-CYAN = "\33[36m"
-WHITE = "\33[37m"
-RESET = "\33[39m"
-
-
 class GridGame:
     # Initialising the game class with necessary args
     def __init__(self, height, width, highest):
         self.path = []
         self.grid = np.random.randint(0, highest, size=(height, width))  # creating grid with random numbers between 0 and n with sizes passed in
         # Print the gird in pretty way
-        print(RESET + "Grid:")
+        print("Grid:")
         for a in self.grid:
             print("   " + str(a))
         print()
@@ -126,7 +114,7 @@ class GridGame:
             neighbours.append((i, self.grid[i[0], i[1]]))
         return neighbours
 
-    def dijkstra1(self):
+    def dijkstra(self):
         neighbours = self.find_neighbours()
         unvisited = {}
         visited = {}
@@ -153,24 +141,24 @@ class GridGame:
 
 def main():
     # Main menu
-    print(BLUE + "     Welcome to Grid Game    \n" )
-    print(CYAN + "Game types:")
-    print(CYAN + "1. Normal")
-    print(CYAN + "2. Dijkstra")
+    print("     Welcome to Grid Game    \n" )
+    print("Game types:")
+    print("1. Heuristic")
+    print("2. Dijkstra")
     gameType = int(input("Choose: "))
     print()
     # While loop to ensure user chose the right mode
     while True:
-        print(CYAN + "Game Modes:")
+        print("Game Modes:")
         print("1. Mode 1")
         print("2. Mode 2")
-        modeNo = int(input(MAGENTA + "Choose your mode: " + RESET))
+        modeNo = int(input("Choose your mode: "))
         if modeNo > 2:
-            print(RED + "\nIncorrect Mode, Chose again\n")
+            print("\nIncorrect Mode, Chose again\n")
             continue
         break
     # user input
-    height = int(input(MAGENTA + "Height of the grid: "))
+    height = int(input("Height of the grid: "))
     width = int(input("Width of the grid: "))
     highest = int(input("Enter max range for random numbers in grid: "))
     # initialise a game class with user input
@@ -185,14 +173,13 @@ def main():
         if modeNo == 1:
             cost, path = game.dijkstra1()
     # print final result
-    print(YELLOW + "Total cost: " + str(cost))
-    print(YELLOW + "Path: ", end='')
+    print("Total cost: " + str(cost))
+    print("Path: ", end='')
     if path:
         for a in path[:-1]:
             print(a, end=", ")
         print(path[-1:][0])
     else:
         print("N/A")
-    print(RESET)
 
 main()
